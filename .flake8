@@ -1,0 +1,7 @@
+[flake8]
+max-line-length = 110
+exclude = .git,__pycache__,venv
+
+per-file-ignores =
+    docs/tools/diagrams.py:E,W,F
+    docs/tools/graphs.py:E,W,F
