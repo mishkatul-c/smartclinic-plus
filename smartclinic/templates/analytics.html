@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Clinic operations</h1><p class="sub">Patient flow for {{ day }} and a staffing forecast for {{ target }}.</p>
+<div class="grid g3">
+  <section class="panel"><h2>Average wait</h2><div class="stat">{{ avg_wait }}<small>minutes</small></div><p class="enc">Check-in to consultation, all recorded visits</p></section>
+  <section class="panel"><h2>Appointments today</h2><div class="stat">{{ util|sum(attribute='booked') }}<small>of {{ util|sum(attribute='capacity') }} slots</small></div><p class="enc">Across {{ util|length }} doctors</p></section>
+  <section class="panel"><h2>Peak hour tomorrow</h2><div class="stat">{% if forecast %}{{ '%02d:00'|format(forecast|dictsort(by='value')|last|first) }}{% else %}—{% endif %}</div><p class="enc">Exponentially smoothed from past weeks</p></section>
+</div>
+<div class="grid g2" style="margin-top:20px">
+  <section class="panel"><h2>Forecast arrivals per hour</h2>
+    <div class="bars">{% for h, v in forecast|dictsort %}<div class="bar {% if v == peak %}peak{% endif %}"><span>{{ v|round(1) }}</span><i style="height:{{ (v/peak*130)|int }}px"></i>{{ h }}:00<br><span class="enc">{{ staff[h] }} staff</span></div>{% endfor %}</div></section>
+  <section class="panel"><h2>Doctor utilisation</h2>
+    {% for u in util %}<p style="margin:10px 0 4px">{{ u.doctor }} <span class="enc">· {{ u.booked }}/{{ u.capacity }} · {{ u.utilisation }}%</span></p><div class="meter"><i style="width:{{ u.utilisation }}%"></i></div>{% endfor %}</section>
+</div>
+{% endblock %}

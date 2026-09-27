@@ -1,0 +1,62 @@
+/* SmartClinic+ — clinical UI. Calm eucalyptus base; red and amber reserved for clinical signals. */
+:root{
+  --ink:#17332E; --muted:#56706A; --line:#D5E2DD;
+  --brand:#2E6B5E; --brand-ink:#FFFFFF; --surface:#EEF4F1; --paper:#FFFFFF;
+  --urgent:#B42318; --urgent-bg:#FDECEA; --warn:#9A4A0B; --warn-bg:#FEF3E2; --ok-bg:#E3F1EC;
+  --radius-lg:14px; --radius-sm:6px;
+}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 "Segoe UI",Carlito,"DejaVu Sans",Arial,sans-serif;color:var(--ink);background:var(--surface)}
+a{color:var(--brand)}
+.shell{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+nav.side{background:var(--ink);color:#DDEBE6;padding:26px 20px;display:flex;flex-direction:column;gap:6px}
+nav.side .brand{font-size:21px;font-weight:700;color:#fff;margin-bottom:2px}
+nav.side .brand span{color:#8FD3BF}
+nav.side .who{font-size:13px;color:#9DB8B0;margin-bottom:22px}
+nav.side a{color:#DDEBE6;text-decoration:none;padding:8px 10px;border-radius:var(--radius-sm)}
+nav.side a.on,nav.side a:hover{background:#24493F;color:#fff}
+nav.side form{margin-top:auto}
+nav.side button{background:none;border:1px solid #3C6158;color:#DDEBE6;width:100%}
+main{padding:30px 38px;max-width:1180px}
+h1{font-size:27px;margin:0 0 4px;letter-spacing:-.2px}
+.sub{color:var(--muted);margin:0 0 24px}
+h2{font-size:17px;margin:0 0 12px}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:1.25fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);padding:7px 6px}
+td{border-bottom:1px solid #EDF3F0;padding:9px 6px;vertical-align:top}
+.pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--ok-bg);color:var(--brand);font-weight:600}
+.pill.red{background:var(--urgent-bg);color:var(--urgent)}.pill.amber{background:var(--warn-bg);color:var(--warn)}
+.pill.grey{background:#EEF1F0;color:#56706A}
+button,.btn{white-space:nowrap;font:inherit;background:var(--brand);color:var(--brand-ink);border:0;border-radius:var(--radius-sm);padding:8px 14px;cursor:pointer;text-decoration:none;display:inline-block}
+button.ghost{background:none;color:var(--brand);border:1px solid var(--brand)}
+button.danger{background:var(--urgent)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #8FD3BF;outline-offset:2px}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+input,select,textarea{font:inherit;width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;color:var(--ink)}
+.row{display:flex;gap:12px;align-items:end}.row>*{flex:1}.row>.fit,.row>form{flex:0 0 auto}
+.slots{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.slots button{background:#fff;color:var(--ink);border:1px solid var(--line);padding:6px 11px;font-variant-numeric:tabular-nums}
+.slots button:hover{border-color:var(--brand);color:var(--brand)}
+.flash{padding:11px 14px;border-radius:var(--radius-sm);margin-bottom:18px}
+.flash.ok{background:var(--ok-bg)}.flash.error{background:var(--urgent-bg);color:var(--urgent)}
+/* Queue tickets: the one bold element — position number reads from across a waiting room */
+.ticket{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line)}
+.ticket .pos{font-size:34px;font-weight:700;color:var(--brand);text-align:center;font-variant-numeric:tabular-nums}
+.ticket.emergency .pos{color:var(--urgent)}
+.ticket .wait{text-align:right;font-variant-numeric:tabular-nums}
+.ticket .wait b{font-size:20px;display:block}
+.stat{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat small{font-size:14px;color:var(--muted);font-weight:400;margin-left:4px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:10px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:12px;color:var(--muted)}
+.bar i{display:block;width:100%;background:var(--brand);border-radius:5px 5px 0 0}
+.bar.peak i{background:var(--warn)}
+.meter{height:9px;background:#E2ECE8;border-radius:9px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--brand)}
+.enc{font-size:12px;color:var(--muted)}
+.login{min-height:100vh;display:grid;place-items:center}
+.login .panel{width:380px}
+@media (max-width:860px){.shell{grid-template-columns:1fr}.g2,.g3{grid-template-columns:1fr}main{padding:20px}}

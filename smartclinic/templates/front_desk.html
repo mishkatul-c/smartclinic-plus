@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Front desk</h1><p class="sub">Check patients in; the queue reorders itself for triage and late arrivals.</p>
+<div class="grid g2">
+<section class="panel"><h2>Arrivals today</h2>
+<table><tr><th>Time</th><th>Patient</th><th>Doctor</th><th></th></tr>
+{% for a in booked %}<tr><td>{{ a.slot_start[11:] }}</td><td>{{ a.patient_name }}</td><td>{{ a.doctor_name }}</td><td>
+{% if a.status=='BOOKED' %}<form method="post" class="row" style="gap:6px"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><input type="hidden" name="appt_id" value="{{ a.id }}">
+<select name="triage" aria-label="Triage"><option value="3">Routine</option><option value="2">Urgent</option><option value="1">Emergency</option></select><button class="fit">Check in</button></form>
+{% else %}<span class="pill">In queue</span>{% endif %}</td></tr>{% endfor %}</table></section>
+<section class="panel"><h2>Live queues</h2>
+{% for doc, q in queues.items() %}<p style="margin:14px 0 2px"><b>{{ doc }}</b> · {{ q|length }} waiting</p>
+{% for e in q %}<div class="ticket {% if e.triage_level==1 %}emergency{% endif %}"><div class="pos">{{ e.position }}</div><div>{{ e.patient_name }}</div><div class="wait"><b>{{ e.est_wait_min }} min</b></div></div>{% endfor %}{% endfor %}
+</section></div>
+{% endblock %}

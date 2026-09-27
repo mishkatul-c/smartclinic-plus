@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ rec.patient.full_name }}</h1>
+<p class="sub">Born {{ rec.dob or '—' }} · {{ rec.patient.phone }} · access recorded in audit log</p>
+<div class="grid g2">
+  <section class="panel">
+    <h2>Allergies</h2>
+    <p>{% for a in rec.allergies.split(',') if a.strip() %}<span class="pill red">{{ a.strip() }}</span> {% else %}<span class="sub">None recorded</span>{% endfor %}</p>
+    <h2>Medical history</h2><p>{{ rec.history or '—' }}</p>
+    <h2>Lab results</h2>
+    <table><tr><th>Test</th><th>Result</th><th>Flag</th></tr>
+    {% for l in rec.labs %}<tr><td>{{ l.test_name }}</td><td>{{ l.result }}</td><td><span class="pill {% if l.flag=='CRITICAL' %}red{% elif l.flag=='ABNORMAL' %}amber{% endif %}">{{ l.flag|lower }}</span></td></tr>{% endfor %}</table>
+    <h2 style="margin-top:18px">Consultation history</h2>
+    <table>{% for c in rec.consultations %}<tr><td>{{ c.created_at[:10] }}</td><td><b>{{ c.diagnosis }}</b><br>{{ c.notes }}</td><td class="enc">{{ c.doctor_name }}</td></tr>{% else %}<tr><td class="sub">No previous consultations.</td></tr>{% endfor %}</table>
+  </section>
+  {% if current_user.role == 'doctor' %}
+  <section class="panel">
+    <h2>Consultation</h2>
+    <form method="post" action="{{ url_for('clinical.consult', patient_id=rec.patient.id) }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}"><input type="hidden" name="appt" value="{{ appt or '' }}">
+      <label for="dx">Diagnosis</label><input id="dx" name="diagnosis" required>
+      <label for="notes">Notes</label><textarea id="notes" name="notes" rows="3"></textarea>
+      <p><button>Save and complete visit</button></p></form>
+    <h2>E-prescription</h2>
+    <form method="post" action="{{ url_for('clinical.prescribe', patient_id=rec.patient.id) }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <div class="row"><div><label for="med">Medication</label><input id="med" name="medication" required></div><div><label for="dose">Dosage</label><input id="dose" name="dosage" required></div></div>
+      <label for="ph">Partner pharmacy</label><select id="ph" name="pharmacy"><option value="">Give to patient</option><option>Harbour Street Pharmacy</option><option>Parkview Chemist</option></select>
+      <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="override" value="1" style="width:auto"> Override allergy warning (clinically justified)</label>
+      <p><button>Send prescription</button></p></form>
+    <h2>Assign a task</h2>
+    <form method="post" action="{{ url_for('clinical.assign_task', patient_id=rec.patient.id) }}" class="row">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <div><label for="tt">Task</label><input id="tt" name="title" placeholder="e.g. Vitals check" required></div>
+      <div><label for="nn">Nurse</label><select id="nn" name="nurse_id">{% for n in nurses %}<option value="{{ n.id }}">{{ n.full_name }}</option>{% endfor %}</select></div>
+      <div class="fit"><button>Assign</button></div></form>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

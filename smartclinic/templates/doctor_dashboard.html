@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Today's clinic</h1>
+<p class="sub">{{ day }} · {{ schedule|length }} appointments · {{ waiting|length }} waiting</p>
+<div class="grid g2">
+  <section class="panel">
+    <div class="row" style="align-items:center"><h2 style="margin:0">Waiting room</h2>
+      <form method="post" action="{{ url_for('clinical.call_next') }}" class="fit"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button>Call next patient</button></form></div>
+    {% for q in waiting %}
+    <div class="ticket {% if q.triage_level==1 %}emergency{% endif %}">
+      <div class="pos">{{ q.position }}</div>
+      <div><b>{{ q.patient_name }}</b><br><span class="enc">Booked {{ q.slot_start[11:] }} · arrived {{ q.checked_in_at[11:] }}</span>
+        {% if q.triage_level==1 %}<span class="pill red">Emergency</span>{% elif q.triage_level==2 %}<span class="pill amber">Urgent</span>{% endif %}</div>
+      <div class="wait"><b>{{ q.est_wait_min }} min</b><span class="enc">est. wait</span></div>
+    </div>
+    {% else %}<p class="sub">Nobody is waiting.</p>{% endfor %}
+  </section>
+  <section class="panel">
+    <h2>Schedule</h2>
+    <table><tr><th>Time</th><th>Patient</th><th>Status</th></tr>
+    {% for a in schedule %}<tr><td>{{ a.slot_start[11:] }}</td><td><a href="{{ url_for('clinical.patient_record', patient_id=a.patient_id) }}">{{ a.patient_name }}</a></td>
+      <td><span class="pill {% if a.status=='COMPLETED' %}grey{% endif %}">{{ a.status|replace('_',' ')|lower|capitalize }}</span></td></tr>{% endfor %}</table>
+    <h2 style="margin-top:22px">Tasks I've assigned</h2>
+    <table>{% for t in my_tasks %}<tr><td>{{ t.title }}</td><td>{{ t.nurse }}</td><td><span class="pill amber">{{ t.status|replace('_',' ')|lower }}</span></td></tr>{% else %}<tr><td class="sub">None open.</td></tr>{% endfor %}</table>
+  </section>
+</div>
+{% endblock %}

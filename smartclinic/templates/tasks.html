@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>My tasks</h1><p class="sub">Tap a task to move it forward. Doctors see progress immediately.</p>
+<section class="panel"><table><tr><th>Task</th><th>Patient</th><th>Due</th><th>Status</th><th></th></tr>
+{% for t in tasks %}<tr><td>{{ t.title }}</td><td>{% if t.patient_id %}<a href="{{ url_for('clinical.patient_record', patient_id=t.patient_id) }}">{{ t.patient_name }}</a>{% endif %}</td><td>{{ t.due_at or '—' }}</td>
+<td><span class="pill {% if t.status=='TODO' %}amber{% elif t.status=='DONE' %}grey{% endif %}">{{ t.status|replace('_',' ')|lower }}</span></td>
+<td>{% if t.status != 'DONE' %}<form method="post"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><input type="hidden" name="task_id" value="{{ t.id }}"><button class="ghost">{{ 'Start' if t.status=='TODO' else 'Mark done' }}</button></form>{% endif %}</td></tr>
+{% else %}<tr><td class="sub">No tasks assigned.</td></tr>{% endfor %}</table></section>
+{% endblock %}

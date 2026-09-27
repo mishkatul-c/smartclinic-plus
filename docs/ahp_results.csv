@@ -1,0 +1,14 @@
+rank,id,requirement,ahp_score,moscow
+1,FR-07,Electronic health records (EHR),8.42,Must
+2,NFR-01,Concurrency: no double bookings,7.88,Must
+3,FR-09,Role-based data privacy controls,7.86,Must
+4,FR-05,E-prescription with allergy check,7.47,Must
+5,FR-01,"Online booking, reschedule, cancel",7.21,Must
+6,FR-04,Doctor dashboard,6.46,Must
+7,FR-08,Lab and test integration,6.13,Should
+8,FR-02,Smart queue,5.42,Should
+9,FR-03,Automated SMS/email notifications,4.67,Should
+10,FR-06,Task assignment,4.61,Could
+11,FR-10,Operational dashboard,3.06,Could
+12,FR-11,Predictive staffing insights,2.61,Could
+13,FR-12,Patient engagement and loyalty,2.13,Could

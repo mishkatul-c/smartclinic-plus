@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}SmartClinic+{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+{% if current_user %}
+<div class="shell">
+  <nav class="side" aria-label="Main">
+    <div class="brand">SmartClinic<span>+</span></div>
+    <div class="who">{{ current_user.full_name }} · {{ current_user.role|capitalize }}</div>
+    {% set r = current_user.role %}
+    {% if r == 'patient' %}<a class="on" href="{{ url_for('patient.dashboard') }}">My appointments</a>{% endif %}
+    {% if r == 'doctor' %}<a class="on" href="{{ url_for('clinical.doctor_dashboard') }}">Today's clinic</a>{% endif %}
+    {% if r == 'nurse' %}<a class="on" href="{{ url_for('clinical.tasks') }}">My tasks</a>{% endif %}
+    {% if r == 'receptionist' %}<a class="on" href="{{ url_for('clinical.front_desk') }}">Front desk</a>{% endif %}
+    {% if r == 'admin' %}<a class="on" href="{{ url_for('admin.analytics') }}">Operations</a>{% endif %}
+    <form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button>Sign out</button></form>
+  </nav>
+  <main>
+    {% for cat, msg in get_flashed_messages(with_categories=true) %}<div class="flash {{ cat }}" role="status">{{ msg }}</div>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% else %}{% block public %}{% endblock %}{% endif %}
+</body></html>

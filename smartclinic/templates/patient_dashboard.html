@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Book an appointment</h1>
+<p class="sub">Pick a doctor and day to see live availability.</p>
+<div class="grid g2">
+  <section class="panel">
+    <form method="get" class="row">
+      <div><label for="doctor">Doctor</label>
+        <select id="doctor" name="doctor">{% for d in doctors %}<option value="{{ d.user_id }}" {% if d.user_id==doctor_id %}selected{% endif %}>{{ d.full_name }} — {{ d.specialty }}</option>{% endfor %}</select></div>
+      <div><label for="day">Day</label><input id="day" type="date" name="day" value="{{ day }}"></div>
+      <div class="fit"><button class="ghost">Show times</button></div>
+    </form>
+    <form method="post" action="{{ url_for('patient.book') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}"><input type="hidden" name="doctor_id" value="{{ doctor_id }}">
+      <label for="reason">Reason for visit (optional)</label><input id="reason" name="reason" placeholder="e.g. follow-up on blood test">
+      <div class="slots">{% for s in slots %}<button name="slot" value="{{ s }}">{{ s[11:] }}</button>{% else %}<span class="sub">No free times on this day.</span>{% endfor %}</div>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>Upcoming</h2>
+    <table><tr><th>When</th><th>Doctor</th><th></th></tr>
+    {% for a in appts %}<tr><td>{{ a.slot_start }}</td><td>{{ a.doctor_name }}<br><span class="enc">{{ a.specialty }}</span></td>
+      <td>{% if a.status=='BOOKED' %}<form method="post" action="{{ url_for('patient.cancel', appt_id=a.id) }}"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="ghost">Cancel</button></form>{% else %}<span class="pill">Checked in</span>{% endif %}</td></tr>
+    {% else %}<tr><td colspan="3" class="sub">No upcoming appointments.</td></tr>{% endfor %}</table>
+    <h2 style="margin-top:22px">Rewards</h2>
+    <div class="stat">{{ points }}<small>points · {{ tier }}</small></div>
+    <p class="sub" style="margin:6px 0 0">{% if package %}You qualify for a discounted annual health check.{% else %}{{ 50 - points }} more points unlock a discounted annual health check.{% endif %}</p>
+  </section>
+</div>
+{% endblock %}
