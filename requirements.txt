@@ -1,8 +1,0 @@
-Flask>=3.0
-cryptography>=42
-numpy>=1.26          # AHP prioritisation tool (docs/tools)
-pytest>=8
-pytest-cov>=5
-flake8>=7
-# Production database driver (PostgreSQL target, see docs/schema_postgresql.sql)
-# psycopg[binary]>=3.1
