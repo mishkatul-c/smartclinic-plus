@@ -2,36 +2,36 @@
 # Replace the @handles below with each member's real GitHub username.
 
 # Mishkatul Abedin Chowdhury (K241095) — Scrum Master: booking, concurrency, notifications
-/smartclinic/services/booking.py        @mishkatul
-/smartclinic/services/notifications.py  @mishkatul
-/smartclinic/routes/patient.py          @mishkatul
-/tests/test_booking.py                  @mishkatul
-/tests/test_concurrency.py              @mishkatul
+/smartclinic/services/booking.py        @mishkatul-c
+/smartclinic/services/notifications.py  @mishkatul-c
+/smartclinic/routes/patient.py          @mishkatul-c
+/tests/test_booking.py                  @mishkatul-c
+/tests/test_concurrency.py              @mishkatul-c
 
 # Humayra Nushrat (K241086) — Product Owner / UX: prototype UI, e-prescription, engagement, AHP
-/smartclinic/templates/                 @humayra
-/smartclinic/static/                    @humayra
-/smartclinic/services/prescriptions.py  @humayra
-/smartclinic/services/engagement.py     @humayra
-/tests/test_clinical.py                 @humayra
-/docs/tools/                            @humayra
+/smartclinic/templates/                 @Humayra702
+/smartclinic/static/                    @Humayra702
+/smartclinic/services/prescriptions.py  @Humayra702
+/smartclinic/services/engagement.py     @Humayra702
+/tests/test_clinical.py                 @Humayra702
+/docs/tools/                            @Humayra702
 
 # Md Mahamudul Amin Maruf (K241071) — Architect / Security: data layer, RBAC, EHR, labs
-/smartclinic/db.py                      @maruf
-/smartclinic/schema.sql                 @maruf
-/smartclinic/security.py                @maruf
-/smartclinic/services/ehr.py            @maruf
-/smartclinic/services/labs.py           @maruf
-/smartclinic/routes/clinical.py         @maruf
-/tests/test_security.py                 @maruf
-/docs/schema_postgresql.sql             @maruf
+/smartclinic/db.py                      @Maruf-stack
+/smartclinic/schema.sql                 @Maruf-stack
+/smartclinic/security.py                @Maruf-stack
+/smartclinic/services/ehr.py            @Maruf-stack
+/smartclinic/services/labs.py           @Maruf-stack
+/smartclinic/routes/clinical.py         @Maruf-stack
+/tests/test_security.py                 @Maruf-stack
+/docs/schema_postgresql.sql             @Maruf-stack
 
 # Md Muhi Uddin Mukit (K240999) — QA / DevOps: CI, queue, tasks, analytics, system tests
-/.github/                               @mukit
-/smartclinic/services/queue.py          @mukit
-/smartclinic/services/tasks.py          @mukit
-/smartclinic/services/analytics.py      @mukit
-/smartclinic/routes/admin.py            @mukit
-/tests/test_queue.py                    @mukit
-/tests/test_analytics.py                @mukit
-/tests/test_journey.py                  @mukit
+/.github/                               @Mukit294
+/smartclinic/services/queue.py          @Mukit294
+/smartclinic/services/tasks.py          @Mukit294
+/smartclinic/services/analytics.py      @Mukit294
+/smartclinic/routes/admin.py            @Mukit294
+/tests/test_queue.py                    @Mukit294
+/tests/test_analytics.py                @Mukit294
+/tests/test_journey.py                  @Mukit294
